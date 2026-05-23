@@ -1,11 +1,32 @@
-# 14nm-Double-Gate-MOSFET — TCAD to Circuit Design
-End-to-end flow from device simulation to analog circuit implementation.
+# 14nm Double Gate MOSFET Modeling & Analog Circuit Design ⚡
 
-Process Flow:-
-Sentaurus SDE → Device simulation → Verilog-A compact model → Cadence Virtuoso circuit
+This project demonstrates a complete workflow from device simulation to analog circuit implementation using a 14nm Double Gate MOSFET (DGMOS).
 
-Contents of the project:-
-14nm DGMOS structure designed and simulated in Sentaurus SDE
-Simulation data extracted and converted into a Verilog-A behavioral model
-Common Source Amplifier built in Cadence Virtuoso using the custom model
-DC, Transient, and AC analyses performed
+## 🔹 Highlights
+
+- Designed and simulated a 14nm DGMOS structure using Sentaurus TCAD 🖥️
+- Extracted device characteristics from TCAD simulations 📊
+- Developed a Verilog-A compact model from extracted data 🔧
+- Imported the model into Cadence Virtuoso ⚙️
+- Designed and analyzed a Common Source Amplifier 📡
+- Performed DC, AC, and transient analysis ⚡
+
+## 🔗 Workflow
+
+TCAD Simulation → Parameter Extraction → Verilog-A Modeling → Circuit Design
+
+## 🛠️ Tools Used
+
+- Sentaurus TCAD
+- Verilog-A
+- Cadence Virtuoso
+
+## 🚀 Applications
+
+- Nanoelectronics
+- Analog IC Design
+- Compact Modeling
+- VLSI Research
+
+@Name4
+
