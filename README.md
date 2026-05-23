@@ -28,5 +28,3 @@ TCAD Simulation → Parameter Extraction → Verilog-A Modeling → Circuit Desi
 - Compact Modeling
 - VLSI Research
 
-@Name4
-
