@@ -1,0 +1,307 @@
+**SDevice Code(Id-Vgs)**
+File {
+   Grid= "@tdr@"
+   Parameter="@parameter@"
+   Plot= "@tdrdat@"
+   Current="@plot@"
+   Output= "@log@"
+}
+
+Electrode {
+   { Name= "s" Voltage= 0.0 Resistor= 40 }
+   { Name= "d" Voltage= 0.0 Resistor= 40 }
+   { Name= "g" Voltage= 0.0 WorkFunction=4.45 }
+}
+
+Physics{
+   Fermi
+   AreaFactor=1.0
+}
+
+Physics(Material= "Silicon"){
+   eQuantumPotential hQuantumPotential
+   EffectiveIntrinsicDensity(OldSlotboom)
+   Mobility(
+      DopingDep
+      HighFieldSaturation
+      Enormal(IALMob(AutoOrientation))
+   )
+   Recombination(
+      SRH(DopingDep TempDependence)
+   )
+}
+
+Plot{
+   eDensity hDensity
+   TotalCurrent/Vector eCurrent/Vector hCurrent/Vector
+   eMobility hMobility
+   eVelocity hVelocity
+   eQuasiFermi hQuasiFermi
+   eTemperature Temperature hTemperature
+   ElectricField/Vector Potential SpaceCharge
+   Doping DonorConcentration AcceptorConcentration
+   SRH Band2Band
+   eGradQuasiFermi/Vector hGradQuasiFermi/Vector
+   eEparallel hEparallel eENormal hENormal
+   BandGap
+   BandGapNarrowing
+   Affinity
+   ConductionBand ValenceBand
+   eQuantumPotential hQuantumPotential
+}
+
+Math {
+  Extrapolate
+  Derivatives
+  Avalderivatives
+  RelErrControl
+  Digits=6
+  ErrRef(electron)= 1.e10
+  ErrRef(hole)= 1.e10
+  Notdamped= 50
+  Iterations= 50
+  Method= ILS
+}
+
+Solve {
+
+   Coupled(Iterations=100 LineSearchDamping=1e-4)
+   { Poisson eQuantumPotential hQuantumPotential }
+
+   Coupled(Iterations=100 LineSearchDamping=1e-4)
+   { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+
+   Quasistationary(
+      InitialStep=0.01 Increment=1.3
+      MinStep=1e-5 MaxStep=0.02
+      Goal { Name="d" Voltage=0.05 }
+   ){
+      Coupled { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+   }
+
+   NewCurrentPrefix="IdVg_"
+
+   Quasistationary(
+      DoZero
+      InitialStep=0.01 Increment=1.3 Decrement=2
+      MinStep=1e-5 MaxStep=0.02
+      Goal { Name="g" Voltage=1.0 }
+   ){
+      Coupled { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+      CurrentPlot(
+         Time=(Range=(0 1) Intervals=60)
+      )
+   }
+}
+
+
+**SDevice Code(Id-Vds)**
+File {
+   Grid= "@tdr@"
+   Parameter="@parameter@"
+   Plot= "@tdrdat@"
+   Current="@plot@"
+   Output= "@log@"
+}
+
+Electrode {
+   { Name= "s" Voltage= 0.0 Resistor= 40 }
+   { Name= "d" Voltage= 0.0 Resistor= 40 }
+   { Name= "g" Voltage= 0.0 WorkFunction=4.45 }
+}
+
+Physics{
+   Fermi
+   AreaFactor=1.0
+}
+
+Physics(Material= "Silicon"){
+   eQuantumPotential hQuantumPotential
+   EffectiveIntrinsicDensity(OldSlotboom)
+
+   Mobility(
+      DopingDep
+      HighFieldSaturation
+      Enormal(IALMob(AutoOrientation))
+   )
+
+   Recombination(
+      SRH(DopingDep TempDependence)
+   )
+}
+
+Plot{
+   eDensity hDensity
+   TotalCurrent/Vector eCurrent/Vector hCurrent/Vector
+   eMobility hMobility
+   eVelocity hVelocity
+   eQuasiFermi hQuasiFermi
+   eTemperature Temperature hTemperature
+   ElectricField/Vector Potential SpaceCharge
+   Doping DonorConcentration AcceptorConcentration
+   SRH Band2Band
+   eGradQuasiFermi/Vector hGradQuasiFermi/Vector
+   eEparallel hEparallel eENormal hENormal
+   BandGap
+   Affinity
+   ConductionBand ValenceBand
+   eQuantumPotential hQuantumPotential
+}
+
+Math {
+  Extrapolate
+  Derivatives
+  Avalderivatives
+  RelErrControl
+  Digits=6
+  ErrRef(electron)= 1.e10
+  ErrRef(hole)= 1.e10
+  Notdamped= 50
+  Iterations= 50
+  Method= ILS
+}
+
+Solve {
+
+   Coupled(Iterations=100 LineSearchDamping=1e-4)
+   { Poisson eQuantumPotential hQuantumPotential }
+
+   Coupled(Iterations=100 LineSearchDamping=1e-4)
+   { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+
+   Quasistationary(
+      InitialStep=0.01 Increment=1.3
+      MinStep=1e-5 MaxStep=0.02
+      Goal { Name="g" Voltage=1.0 }
+   ){
+      Coupled { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+   }
+
+   NewCurrentPrefix="IdVds_"
+
+   Quasistationary(
+      DoZero
+      InitialStep=0.01 Increment=1.3 Decrement=2
+      MinStep=1e-5 MaxStep=0.02
+      Goal { Name="d" Voltage=1.0 }
+   ){
+      Coupled { Poisson Electron Hole eQuantumPotential hQuantumPotential }
+
+      CurrentPlot(
+         Time=(Range=(0 1) Intervals=60)
+      )
+   }
+}
+
+
+**SDevice Code(Cgg-Vgs)**
+#setdep @previous@
+
+Device "DGMOS" {
+
+  File {
+    Grid     = "@tdr@"
+    Plot     = "@tdrdat@"
+    Current  = "@plot@"
+  }
+
+  Electrode {
+    { Name="s"  Voltage=0.0 }
+    { Name="d"  Voltage=0.0 }
+    { Name="g"  Voltage=0.0 WorkFunction=4.45 }
+  }
+
+  Physics {
+    Fermi
+    AreaFactor=1.0
+    EffectiveIntrinsicDensity( OldSlotboom )
+    Mobility(
+      DopingDep
+      eHighFieldSaturation( GradQuasiFermi )
+      hHighFieldSaturation( GradQuasiFermi )
+      Enormal
+    )
+    Recombination(
+      SRH( DopingDep TempDependence )
+    )
+  }
+
+} * End Device{}
+
+Plot {
+  eDensity hDensity
+  TotalCurrent/Vector eCurrent/Vector hCurrent/Vector
+  eMobility hMobility
+  eVelocity hVelocity
+  eQuasiFermi hQuasiFermi
+  eTemperature Temperature
+  ElectricField/Vector Potential SpaceCharge
+  Doping DonorConcentration AcceptorConcentration
+  SRH
+  eGradQuasiFermi/Vector hGradQuasiFermi/Vector
+  eEparallel hEparallel eENormal hENormal
+  BandGap BandGapNarrowing
+  Affinity ConductionBand ValenceBand
+}
+
+Math {
+  RelErrControl
+  Digits=5
+  ErrRef(electron)=1.e10
+  ErrRef(hole)=1.e10
+  Iterations=20
+  Notdamped=100
+  Method=Blocked
+  SubMethod=Super
+  ACMethod=Blocked
+  ACSubMethod=Super
+}
+
+File {
+  Output   = "@log@"
+  ACExtract = "@acplot@"
+}
+
+System {
+  *-- Physical device
+  DGMOS nmos1 ( "s"=s "d"=d "g"=g )
+
+  *-- Lumped voltage sources
+  Vsource_pset vg (g 0) { dc = 0.0 }
+  Vsource_pset vs (s 0) { dc = 0.0 }
+  Vsource_pset vd (d 0) { dc = 0.0 }
+}
+
+Solve {
+
+  * Step 1: Initial Poisson solve
+  NewCurrentPrefix="init_"
+  Coupled(Iterations=100) { Poisson }
+  Coupled { Poisson Electron Hole }
+
+  * Step 2: Sweep Vg from 0 to negative (depletion/inversion start)
+  Quasistationary (
+    InitialStep=0.1  Increment=1.3
+    MaxStep=0.5      MinStep=1.e-5
+    Goal { Parameter=vg.dc Voltage=-3.0 }
+  ){
+    Coupled { Poisson Electron Hole }
+  }
+
+  * Step 3: C-V sweep — Vg from -3V to +3V with AC small signal
+  NewCurrentPrefix=""
+  Quasistationary (
+    InitialStep=0.01  Increment=1.3
+    MaxStep=0.05      MinStep=1.e-5
+    Goal { Parameter=vg.dc Voltage=3.0 }
+  ){
+    ACCoupled (
+      StartFrequency=1e6  EndFrequency=1e6
+      NumberOfPoints=1    Decade
+      Node(s d g)
+      Exclude(vs vd vg)
+      ACCompute( Time=( Range=(0 1) Intervals=40 ) )
+    ){ Poisson Electron Hole }
+  }
+}
+
