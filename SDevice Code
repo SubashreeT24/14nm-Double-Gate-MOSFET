@@ -263,10 +263,8 @@ File {
 }
 
 System {
-  *-- Physical device
   DGMOS nmos1 ( "s"=s "d"=d "g"=g )
 
-  *-- Lumped voltage sources
   Vsource_pset vg (g 0) { dc = 0.0 }
   Vsource_pset vs (s 0) { dc = 0.0 }
   Vsource_pset vd (d 0) { dc = 0.0 }
@@ -274,12 +272,10 @@ System {
 
 Solve {
 
-  * Step 1: Initial Poisson solve
   NewCurrentPrefix="init_"
   Coupled(Iterations=100) { Poisson }
   Coupled { Poisson Electron Hole }
 
-  * Step 2: Sweep Vg from 0 to negative (depletion/inversion start)
   Quasistationary (
     InitialStep=0.1  Increment=1.3
     MaxStep=0.5      MinStep=1.e-5
@@ -288,7 +284,6 @@ Solve {
     Coupled { Poisson Electron Hole }
   }
 
-  * Step 3: C-V sweep — Vg from -3V to +3V with AC small signal
   NewCurrentPrefix=""
   Quasistationary (
     InitialStep=0.01  Increment=1.3
