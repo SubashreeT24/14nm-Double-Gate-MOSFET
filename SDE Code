@@ -1,4 +1,4 @@
-#SDE code#
+**SDE Code**
 (sdegeo:set-auto-region-naming OFF)
 (bound? (quote source))
 (sde:set-default-material "Silicon")
