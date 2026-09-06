@@ -31,10 +31,6 @@ This project demonstrates a complete workflow from **device-level simulation** t
 
 ## 🔗 3. Workflow
 
-<p align="center">
-  <img src="docs/mosfet-workflow.svg" alt="14nm DGMOS Design Workflow" width="900"/>
-</p>
-
 **TCAD Simulation → Parameter Extraction → Verilog-A Modeling → Circuit Design → Amplifier Analysis**
 
 Each stage feeds directly into the next: the physical device model built in TCAD provides the raw characteristics, which are distilled into a portable Verilog-A model, which in turn drives real circuit-level simulation and analysis in Cadence.
