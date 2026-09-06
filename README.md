@@ -31,17 +31,9 @@ This project demonstrates a complete workflow from **device-level simulation** t
 
 ## 🔗 3. Workflow
 
-```mermaid
-flowchart LR
-    A["🖥️ TCAD Simulation<br/>Design & simulate<br/>14nm DGMOS structure"] --> B["📊 Parameter Extraction<br/>Extract device<br/>characteristics"]
-    B --> C["🔧 Verilog-A Modeling<br/>Build compact model<br/>from extracted data"]
-    C --> D["⚙️ Circuit Design<br/>Import model into<br/>Cadence Virtuoso"]
-    D --> E["📡 Common Source<br/>Amplifier Design"]
-    E --> F["⚡ DC / AC / Transient<br/>Analysis"]
-
-    classDef stage fill:#0d3b66,stroke:#092a49,color:#fff
-    class A,B,C,D,E,F stage
-```
+<p align="center">
+  <img src="docs/mosfet-workflow.svg" alt="14nm DGMOS Design Workflow" width="900"/>
+</p>
 
 **TCAD Simulation → Parameter Extraction → Verilog-A Modeling → Circuit Design → Amplifier Analysis**
 
